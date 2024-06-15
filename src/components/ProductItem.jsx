@@ -1,4 +1,4 @@
-export const ProductItem = ({title, id,price, photo, onMove})=>{
+export const ProductItem = ({title, id, price, photo, onMove})=>{
 
 
     return <div>

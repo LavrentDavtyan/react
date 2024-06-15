@@ -1,7 +1,6 @@
 import { BasketItem } from "./BasketItem"
 
-export const Bascet = ({items})=>{
-
+export const Bascet = ({items, addToBasket, subtractFromBasket, removeFromBasket})=>{
 
     return <div>
         <h3>Basket</h3>
@@ -15,13 +14,11 @@ export const Bascet = ({items})=>{
                     <th> Subtotal</th>
                     <th> Actions</th>
                 </tr>
-
             </thead>
             <tbody>
                 {
-                    items.map(elm=> <BasketItem key={elm.id} {...elm}/>)
+                    items.map(elm=> <BasketItem key={elm.id} {...elm} addToBasket={addToBasket} subtractFromBasket={subtractFromBasket} removeFromBasket={removeFromBasket}/>)
                 }
-
             </tbody>
         </table>
     </div>

@@ -7,7 +7,6 @@ import { Bascet } from './components/Bascet'
 
 function App() {
 
-
     const [basket, setBasket] = useState([])
 
     const [products, setProduct] = useState([
@@ -18,17 +17,49 @@ function App() {
         {id:105, title: "Exam", price: 124, photo: "https://images.pangobooks.com/images/c0bd88da-3f03-4816-ae7f-98b0f1d25dfa?quality=85&width=1200&crop=1%3A1"},
     ])
 
-
     const moveToCart = id => {
-        let found = products.find(x=>x.id ===id)
-        setBasket([...basket, {...found, count:1}])
+
+        const found = products.find(product => product.id === id)
+
+        const indexInBasket = basket.findIndex(item => item.id === id)
+
+        if (indexInBasket !== -1) {
+            const updatedBasket = [...basket]
+            updatedBasket[indexInBasket] = {
+                ...updatedBasket[indexInBasket],
+                count: updatedBasket[indexInBasket].count + 1
+            };
+            setBasket(updatedBasket);
+        } else {
+            setBasket([...basket, { ...found, count: 1 }]);
+        }
     }
 
+    const addToBasket = id =>{
+        setBasket(basket.map(elm => elm.id === id ? { ...elm, count: elm.count + 1 } : elm));
+    }
+
+    const subtractFromBasket = id =>{
+        
+        const itemIndex = basket.findIndex(elm => elm.id === id);
+
+        if (itemIndex !== -1) {
+            if (basket[itemIndex].count - 1 <= 0) {
+                removeFromBasket(id);
+            } else {
+                setBasket(basket.map(elm => elm.id === id ? { ...elm, count: elm.count - 1 } : elm));
+            }
+        }
+    }
+
+    const removeFromBasket = id =>{
+        setBasket(basket.filter(elm => elm.id !== id));
+    }
 
     return (
         <div className="row">
             <ProductList items={products} onMove={moveToCart} />
-            <Bascet items={basket}/>
+            <Bascet items={basket}  addToBasket={addToBasket} subtractFromBasket={subtractFromBasket} removeFromBasket={removeFromBasket}/>
         </div>
     )
 }
