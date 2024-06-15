@@ -1,9 +1,10 @@
 import { BasketItem } from "./BasketItem"
 
-export const Bascet = ({items, addToBasket, subtractFromBasket, removeFromBasket})=>{
+export const Bascet = ({items, total, addToBasket, subtractFromBasket, removeFromBasket})=>{
 
     return <div>
         <h3>Basket</h3>
+        <h2>Total sum : {total}</h2>
 
         <table>
             <thead>
