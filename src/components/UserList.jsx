@@ -1,7 +1,8 @@
 import Types from "prop-types"
 
 
-export const UserList = ({users}) => {
+export const UserList = ({users, onDelete, onSalaryUp}) => {
+
     return <div>
         <h1>UserList</h1>
         <table>
@@ -16,12 +17,15 @@ export const UserList = ({users}) => {
             </thead>
             <tbody>
                 {
-                    users.map(elm=> <tr key={elm.id}>
+                    users.map(elm=> <tr key={elm.id} style={elm.salary >= 80000 ? { color: 'red' } : {}}>
                         <td>{elm.name}</td>
                         <td>{elm.surname}</td>
                         <td>{elm.salary}</td>
                         <td>{elm.name}</td>
-
+                        <td>
+                            <button onClick={()=> onDelete(elm.id) }>Delete</button>
+                            <button onClick={() => onSalaryUp(elm.id)}>Salary up</button>
+                        </td>
                     </tr>)
                 }
             </tbody>
@@ -37,5 +41,6 @@ UserList.propTypes ={
             surname: Types.string,
             salary: Types.number,
         })
-    )
+    ),
+    onDelete:Types.func
 }
